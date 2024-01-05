@@ -10,8 +10,8 @@ from models import paramHelper
 class HGNN_conv(nn.Module):
     def __init__(self, ph, in_dim, out_dim) -> None:
         super().__init__()
-        self.weights = Parameter(torch.Tensor(in_dim, out_dim)).to(ph.device)
-        self.biases = Parameter(torch.Tensor(out_dim)).to(ph.device)
+        self.weights = Parameter(torch.Tensor(in_dim, out_dim))
+        self.biases = Parameter(torch.Tensor(out_dim))
 
         stdv = 1. / math.sqrt(self.weights.size(1))
         self.weights.data.uniform_(-stdv, stdv)
@@ -40,7 +40,7 @@ class Fuser(nn.Module):
     def __init__(self, ph, ch_dim=2, num_ch=6) -> None:
         super().__init__()
         self.in_dim = ch_dim * num_ch
-        self.voter = nn.Linear(self.in_dim, 1).to(ph.device)
+        self.voter = nn.Linear(self.in_dim, 1)
 
     def forward(self, x):
         return self.voter(x).squeeze()
