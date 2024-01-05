@@ -56,6 +56,9 @@ for batch_idx in range(helper.n_batch):
     time_cost = time.time() - since
     mean_train_loss += losses[-1] / helper.n_batch
 
+    model.eval()
+    outputs = model(batchCombData, readyGs)
+    
     temp = list(map(lambda x: torch.expm1(x).item(), outputs[batchTrainOnlyIdxs.shape[0]:]))
     write += temp
 
